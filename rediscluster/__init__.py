@@ -33,8 +33,11 @@ def int_or_str(value):
 
 
 # Major, Minor, Fix version
-__version__ = '2.1.4.monetate'
-VERSION = tuple(map(int_or_str, __version__.split('.')))
+__version__ = '2.1.4+monetate.1'
+# Treat the PEP 440 local separator as a component separator, so the local label lands in its own
+# element and the fix version stays an int: 2.1.4+monetate.1 -> (2, 1, 4, 'monetate', 1). Versions
+# with no local part are unaffected.
+VERSION = tuple(map(int_or_str, __version__.replace('+', '.').split('.')))
 
 __all__ = [
     'AskError',
